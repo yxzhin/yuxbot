@@ -1,0 +1,27 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: yuxbot
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: yxzhin
+    email: yxzhin@gmail.com
+    affiliation: cirhalfstudio
+repository-code: 'https://github.com/yxzhin/yuxbot'
+url: 'https://cirf.hhos.net'
+abstract: >-
+  an intimidating asynchronous MMORPG game in Discord -
+  build your Empire!
+keywords:
+  - fastapi
+  - discord.py
+  - svelte
+  - yuxbot
+  - yxzhin
+license: GPL-3.0
+version: v0.1.0
+date-released: '2026-01-31'
