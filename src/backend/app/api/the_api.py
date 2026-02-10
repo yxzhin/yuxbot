@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from ...config import Config
-from ...infra.utils import TraceIDMiddleware, lifespan
+from ...utils import TraceIDMiddleware, lifespan
 from .v1.routers import api_router
 
 app = FastAPI(

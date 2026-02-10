@@ -2,13 +2,13 @@ from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from typing import Any
 
-from ..db import Database
+from ..infra.db import Database
 from . import StructuredLogger
 from .redis import RedisService
 
 
 @asynccontextmanager
-async def lifespan(_: Any) -> AsyncGenerator[None]:
+async def lifespan(_: Any) -> AsyncGenerator[None, Any]:
     """
     Контекстный менеджер для управления временем жизни приложения FastAPI.
     Инициализирует и закрывает ресурсы при старте и остановке приложения.

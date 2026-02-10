@@ -1,6 +1,6 @@
 from redis.asyncio import Redis
 
-from ...config import Config
+from ..config import Config
 from . import StructuredLogger
 
 

@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import (
 )
 
 from ...config import Config
-from ..utils import StructuredLogger
+from ...utils import StructuredLogger
 
 
 class Database:

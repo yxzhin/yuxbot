@@ -1,4 +1,4 @@
-from .infra.utils import StructuredLogger
+from .utils import StructuredLogger
 
 
 def main() -> None:

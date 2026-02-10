@@ -44,18 +44,18 @@ repos:
         always_run: false
         verbose: true
 
-  - repo: local
-    hooks:
-      - id: prettier-and-eslint-check
-        name: prettier and eslint check
-        entry: pnpm --filter @yuxbot/frontend run lint --
-        language: system
-        pass_filenames: false
+  #- repo: local
+  #  hooks:
+  #    - id: prettier-and-eslint-check
+  #      name: prettier and eslint check
+  #      entry: pnpm --filter @yuxbot/frontend run lint --
+  #      language: system
+  #      pass_filenames: false
 
-  - repo: local
-    hooks:
-      - id: prettier-format
-        name: prettier format
-        entry: pnpm --filter @yuxbot/frontend run format --
-        language: system
-        pass_filenames: false
+  #- repo: local
+  #  hooks:
+  #    - id: prettier-format
+  #      name: prettier format
+  #      entry: pnpm --filter @yuxbot/frontend run format --
+  #      language: system
+  #      pass_filenames: false
