@@ -2,7 +2,6 @@ services:
   postgres:
     image: postgres:latest
     container_name: yuxbot_postgres
-    restart: always
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
@@ -15,12 +14,11 @@ services:
   redis:
     image: redis:latest
     container_name: yuxbot_redis
-    restart: always
     ports:
       - "6379:6379"
     volumes:
       - redis_data:/data
-    command: [ "redis-server", "--appendonly", "yes" ]
+    command: ["redis-server", "--save", "60", "1"]
 
 volumes:
   postgres_data:

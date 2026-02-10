@@ -12,7 +12,7 @@ dependencies = [
     "fastapi[standard-no-fastapi-cloud-cli]>=0.128.0",
     "loguru>=0.7.3",
     "mypy>=1.19.1",
-    "psycopg2>=2.9.11",
+    "psycopg2-binary>=2.9.11",
     "redis>=7.1.0",
     "sqlalchemy>=2.0.46",
 ]
@@ -26,13 +26,16 @@ dev = [
     "pytest-cov>=7.0.0",
     "ruff>=0.14.14",
 ]
+prod = [
+    "gunicorn>=25.0.3",
+]
 
 [tool.ruff]
 line-length = 88
 indent-width = 4
 target-version = "py313"
 exclude = [
-    "src/frontend",
+    "frontend",
     "*/alembic/*"
 ]
 
@@ -80,7 +83,8 @@ exclude = [
 [tool.pytest.ini_options]
 addopts = "-v" #  --cov=src/backend --cov-report=html
 testpaths = [
-    "src/backend/tests",
+    "src/backend/services/clans/tests",
+    "src/backend/services/players/tests",
 ]
 pythonpath = ["."]
 asyncio_mode = "auto"

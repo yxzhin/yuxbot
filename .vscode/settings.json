@@ -9,12 +9,12 @@
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
-  "[json]": {
+  "[jsonc]": {
     "editor.quickSuggestions": {
       "strings": true
     },
     "editor.suggest.insertMode": "replace",
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
     "editor.maxTokenizationLineLength": 2500,
@@ -44,7 +44,7 @@
       "strings": "off",
       "other": "off"
     },
-    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
   },
   "python.analysis.typeCheckingMode": "basic",
   "markdown.validate.enabled": true,
