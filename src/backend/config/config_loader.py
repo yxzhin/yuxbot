@@ -4,7 +4,7 @@ from pathlib import Path
 class ConfigLoader:
     """Класс для загрузки переменных окружения из файла .env."""
 
-    BASE_PATH = Path(__file__).resolve().parent.parent.parent.parent.parent
+    BASE_PATH = Path(__file__).resolve().parent.parent.parent.parent
 
     @staticmethod
     def import_env() -> None:

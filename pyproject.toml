@@ -85,6 +85,7 @@ addopts = "-v" #  --cov=src/backend --cov-report=html
 testpaths = [
     "src/backend/services/clans/tests",
     "src/backend/services/players/tests",
+    "src/backend/app/api/tests",
 ]
 pythonpath = ["."]
 asyncio_mode = "auto"

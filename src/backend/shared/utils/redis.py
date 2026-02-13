@@ -1,7 +1,7 @@
 from redis.asyncio import Redis
 
 from ...config import Config
-from . import StructuredLogger
+from .logging import StructuredLogger
 
 
 class RedisService:

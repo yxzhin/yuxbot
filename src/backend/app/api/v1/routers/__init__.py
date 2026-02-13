@@ -1,5 +1,3 @@
-from fastapi import APIRouter
+from .players_router import players_router
 
-from . import *
-
-api_router = APIRouter(prefix="/api/v1")
+__all__ = ["players_router"]

@@ -2,8 +2,8 @@ from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from typing import Any
 
-from ..db import Database
-from . import StructuredLogger
+from .database import Database
+from .logging import StructuredLogger
 from .redis import RedisService
 
 
