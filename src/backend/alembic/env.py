@@ -5,8 +5,8 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from src.backend.shared.db import Base
-#from src.backend.config import Config
+from src.backend.shared.utils import Base
+from src.backend.config import Config
 
 from alembic import context
 
@@ -18,6 +18,8 @@ config = context.config
 # This line sets up loggers basically.
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
+
+config.set_main_option("sqlalchemy.url", Config.DATABASE_URL)
 
 # add your model's MetaData object here
 # for 'autogenerate' support

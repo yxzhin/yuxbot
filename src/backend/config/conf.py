@@ -1,6 +1,6 @@
 import os
 
-from ..shared.utils import ConfigLoader
+from .config_loader import ConfigLoader
 
 ConfigLoader.import_env()
 

@@ -1,8 +1,8 @@
-from .utils import StructuredLogger
+from ...shared.utils import StructuredLogger
 
 
 def main() -> None:
-    """Точка входа для запуска приложения. biscuits."""
+    """Точка входа для запуска бота. biscuits."""
     StructuredLogger.setup()
     # //@TODO
     # bot = create_bot()
