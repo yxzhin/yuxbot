@@ -5,7 +5,13 @@ from starlette.middleware.cors import CORSMiddleware
 
 from ...config import Config
 from ...shared.utils import TraceIDMiddleware, lifespan
-from .di.providers import DBSessionProvider, RepositoryProvider, UseCaseProvider
+from .di.providers import (
+    DBSessionProvider,
+    EventBusProvider,
+    RepositoryProvider,
+    UnitOfWorkProvider,
+    UseCaseProvider,
+)
 from .v1 import api_v1_router
 
 app = FastAPI(
@@ -32,7 +38,9 @@ app.include_router(api_v1_router)
 
 container = make_async_container(
     DBSessionProvider(),
+    EventBusProvider(),
     RepositoryProvider(),
+    UnitOfWorkProvider(),
     UseCaseProvider(),
 )
 

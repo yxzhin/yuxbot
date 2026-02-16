@@ -16,7 +16,7 @@ class ClanName:
         trans = str.maketrans("", "", whitespace)
         self.value = self.value.translate(trans)
 
-        if 3 > len(self.value) > 30:
+        if len(self.value) < 3 or len(self.value) > 30:
             raise InvalidClanNameLengthError(
                 "clan name length must be 3-30 characters long"
             )
@@ -28,9 +28,9 @@ class ClanTag:
 
     def __post_init__(self):
         trans = str.maketrans("", "", whitespace)
-        self.value = self.value.capitalize().translate(trans)
+        self.value = self.value.upper().translate(trans)
 
-        if 2 > len(self.value) > 6:
+        if len(self.value) < 2 or len(self.value) > 6:
             raise InvalidClanTagLengthError(
                 "clan tag length must be 2-6 characters long"
             )

@@ -76,6 +76,7 @@ disallow_untyped_decorators = false
 ignore_missing_imports = true
 disallow_subclassing_any = false
 explicit_package_bases = true
+check_untyped_defs = true
 exclude = [
     "^src/backend/infra/alembic/"
 ]

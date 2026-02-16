@@ -16,10 +16,12 @@ from sqlalchemy.ext.asyncio import (
 
 from src.backend.app.api.di.providers import (
     DBSessionProvider,
+    EventBusProvider,
     RepositoryProvider,
+    UnitOfWorkProvider,
     UseCaseProvider,
 )
-from src.backend.app.api.v1.routers import players_router
+from src.backend.app.api.v1.routers import clans_router, players_router
 from src.backend.shared.utils import Base
 
 
@@ -69,7 +71,9 @@ async def app_container(
 ) -> AsyncGenerator[AsyncContainer, Any]:
     app_container = make_async_container(
         DBSessionProvider(db_sess),
+        EventBusProvider(),
         RepositoryProvider(),
+        UnitOfWorkProvider(),
         UseCaseProvider(),
     )
     yield app_container
@@ -80,6 +84,7 @@ async def app_container(
 def app(app_container: AsyncContainer) -> FastAPI:
     """Создает FastAPI приложение для тестирования."""
     app = FastAPI()
+    app.include_router(clans_router)
     app.include_router(players_router)
 
     setup_dishka(container=app_container, app=app)
@@ -122,3 +127,28 @@ def create_player(httpx_client: AsyncClient) -> Callable[[int, str], Any]:
         return json["player"]
 
     return _create_player
+
+
+@pytest.fixture
+def create_clan(httpx_client: AsyncClient) -> Callable[[str, str, int], Any]:
+    """
+    Фикстура для создания клана через API.
+    Возвращает функцию, которая создает клан с заданными параметрами.
+    """
+
+    async def _create_clan(clan_name: str, clan_tag: str, owner_id: int) -> dict:
+        payload = {
+            "clan_name": clan_name,
+            "clan_tag": clan_tag,
+            "owner_id": owner_id,
+        }
+
+        response = await httpx_client.post("/clans/create", json=payload)
+        assert response.status_code == 201, response.text
+
+        json = response.json()
+        assert json["success"] is True
+
+        return json["clan"]
+
+    return _create_clan

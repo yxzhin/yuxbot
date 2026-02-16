@@ -1,4 +1,5 @@
 from ...domain.entities import ClanMember
+from ..dto import ClanMemberDTO
 from ..models import ClanMemberModel
 
 
@@ -28,3 +29,16 @@ class ClanMemberMapper:
             joined_at=clan_member.joined_at,
         )
         return model
+
+    @staticmethod
+    def to_dto(clan_member: ClanMember | None) -> ClanMemberDTO | None:
+        if clan_member is None:
+            return None
+
+        dto = ClanMemberDTO(
+            clan_member_id=clan_member.clan_member_id,
+            player_id=clan_member.player_id,
+            clan_id=clan_member.clan_id,
+            joined_at=clan_member.joined_at,
+        )
+        return dto

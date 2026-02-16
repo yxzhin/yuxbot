@@ -1,11 +1,9 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime, String
+from sqlalchemy import DateTime, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .....shared.utils import Base
-from ...domain.value_objects import Money
-from ..type_mappers import MoneyTypeMapper
 
 
 class PlayerModel(Base):
@@ -15,10 +13,9 @@ class PlayerModel(Base):
     username: Mapped[str] = mapped_column(
         String(255),
         nullable=False,
-        unique=True,
     )
-    balance: Mapped[Money] = mapped_column(
-        MoneyTypeMapper,
+    balance: Mapped[int] = mapped_column(
+        Integer(),
         default=0,
         nullable=False,
     )

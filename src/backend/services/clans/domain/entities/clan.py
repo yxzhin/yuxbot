@@ -1,19 +1,49 @@
 from datetime import datetime
+from uuid import UUID, uuid4
 
+from .....shared.events import DomainEvent
+from ..events import ClanCreatedEvent
 from ..value_objects import ClanName, ClanTag
 
 
 class Clan:
     def __init__(
         self,
-        clan_id: int,
+        clan_id: UUID,
         clan_name: ClanName,
         clan_tag: ClanTag,
         owner_id: int,
-        created_at: datetime | None = None,
+        created_at: datetime,
     ):
         self.clan_id = clan_id
         self.clan_name = clan_name
         self.clan_tag = clan_tag
         self.owner_id = owner_id
-        self.created_at = created_at or datetime.now()
+        self.created_at = created_at
+        self._events: list[DomainEvent] = []
+
+    @classmethod
+    def create(
+        cls,
+        clan_name: str,
+        clan_tag: str,
+        owner_id: int,
+    ) -> "Clan":
+        clan_id = uuid4()
+        created_at = datetime.now()
+        clan_name_ = ClanName(clan_name)
+        clan_tag_ = ClanTag(clan_tag)
+        clan = cls(clan_id, clan_name_, clan_tag_, owner_id, created_at)
+        event = ClanCreatedEvent.new(
+            clan_id=clan_id,
+            clan_name=clan_name,
+            clan_tag=clan_tag,
+            owner_id=owner_id,
+        )
+        clan._events.append(event)
+        return clan
+
+    def pull_events(self):
+        events = self._events.copy()
+        self._events.clear()
+        return events

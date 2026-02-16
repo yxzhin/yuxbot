@@ -12,7 +12,7 @@ class PlayerMapper:
         return Player(
             player_id=player.player_id,
             username=player.username,
-            balance=Money(player.balance.amount),
+            balance=Money(player.balance),
             created_at=player.created_at,
         )
 
@@ -23,7 +23,7 @@ class PlayerMapper:
         return PlayerModel(
             player_id=player.player_id,
             username=player.username,
-            balance=Money(player.balance.amount),
+            balance=player.balance.amount,
             created_at=player.created_at,
         )
 
