@@ -13,10 +13,10 @@ def event_bus():
 
 
 @pytest.fixture
-async def player_uow():
+async def player_uow_factory():
     return lambda: InMemoryPlayerUnitOfWork()
 
 
 @pytest.fixture
-def create_player_uc(player_uow, event_bus):
-    return CreatePlayerUseCase(player_uow, event_bus)
+def create_player_uc(player_uow_factory, event_bus):
+    return CreatePlayerUseCase(player_uow_factory, event_bus)

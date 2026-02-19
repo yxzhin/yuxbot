@@ -13,10 +13,10 @@ def event_bus():
 
 
 @pytest.fixture
-async def clan_uow(event_bus):
+async def clan_uow_factory():
     return lambda: InMemoryClanUnitOfWork()
 
 
 @pytest.fixture
-def create_clan_uc(clan_uow, event_bus):
-    return CreateClanUseCase(clan_uow, event_bus)
+def create_clan_uc(clan_uow_factory, event_bus):
+    return CreateClanUseCase(clan_uow_factory, event_bus)

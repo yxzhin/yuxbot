@@ -78,15 +78,13 @@ disallow_subclassing_any = false
 explicit_package_bases = true
 check_untyped_defs = true
 exclude = [
-    "^src/backend/infra/alembic/"
+    "^src/backend/alembic/"
 ]
 
 [tool.pytest.ini_options]
 addopts = "-v" #  --cov=src/backend --cov-report=html
 testpaths = [
-    "src/backend/services/clans/tests",
-    "src/backend/services/players/tests",
-    "src/backend/app/api/tests",
+    "src/backend/tests",
 ]
 pythonpath = ["."]
 asyncio_mode = "auto"
