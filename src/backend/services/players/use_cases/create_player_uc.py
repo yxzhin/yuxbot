@@ -1,21 +1,21 @@
 from collections.abc import Callable
 
-from ....shared.ports import BaseEventBus, BaseUseCase
+from ....shared.ports import EventBus, UseCase
 from ..domain.entities import Player
 from ..domain.exceptions import PlayerAlreadyExistsError
 from ..ports import PlayerUnitOfWork
 
 
-class CreatePlayerUseCase(BaseUseCase):
+class CreatePlayerUseCase(UseCase):
     def __init__(
         self,
         player_uow_factory: Callable[[], PlayerUnitOfWork],
-        event_bus: BaseEventBus,
+        event_bus: EventBus,
     ):
         self.player_uow_factory = player_uow_factory
         self.event_bus = event_bus
 
-    async def execute(self, player_id: int, username: str) -> Player:
+    async def execute(self, player_id: int, username: str) -> Player:  # type: ignore
         async with self.player_uow_factory() as player_uow:
             existing = await player_uow.player_repo.get_by_id(player_id)
             if existing:

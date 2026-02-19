@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import Self
 
-from .base_entity import BaseEntity
+from .entity import Entity
 
 
-class BaseAggregate(BaseEntity, ABC):
+class Aggregate(Entity, ABC):
     @classmethod
     @abstractmethod
     def create(cls) -> Self: ...

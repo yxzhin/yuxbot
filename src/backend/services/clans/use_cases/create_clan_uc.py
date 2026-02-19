@@ -1,21 +1,21 @@
 from collections.abc import Callable
 
-from ....shared.ports import BaseEventBus, BaseUseCase
+from ....shared.ports import EventBus, UseCase
 from ..domain.entities import Clan, ClanMember
 from ..domain.exceptions import ClanAlreadyExistsError
 from ..ports import ClanUnitOfWork
 
 
-class CreateClanUseCase(BaseUseCase):
+class CreateClanUseCase(UseCase):
     def __init__(
         self,
         clan_uow_factory: Callable[[], ClanUnitOfWork],
-        event_bus: BaseEventBus,
+        event_bus: EventBus,
     ):
         self.clan_uow_factory = clan_uow_factory
         self.event_bus = event_bus
 
-    async def execute(self, clan_name: str, clan_tag: str, owner_id: int) -> Clan:
+    async def execute(self, clan_name: str, clan_tag: str, owner_id: int) -> Clan:  # type: ignore
         async with self.clan_uow_factory() as clan_uow:
             existing = await clan_uow.clan_repo.get_by_name(clan_name)
             if existing:

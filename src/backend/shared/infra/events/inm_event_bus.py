@@ -2,13 +2,13 @@ from collections import defaultdict
 from collections.abc import Awaitable, Callable, Iterable
 from traceback import print_exc
 
-from ...ports import BaseEventBus
-from .domain_event import DomainEvent
+from ...domain import DomainEvent
+from ...ports import EventBus
 
 Handler = Callable[[DomainEvent], Awaitable[None]]
 
 
-class InMemoryEventBus(BaseEventBus):
+class InMemoryEventBus(EventBus):
     def __init__(self):
         self.handlers: dict[type[DomainEvent], list[Handler]] = defaultdict(list)
 

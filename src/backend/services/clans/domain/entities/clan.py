@@ -2,12 +2,12 @@ from datetime import datetime
 from typing import Self
 from uuid import UUID, uuid4
 
-from .....shared.ports import BaseAggregate
+from .....shared.domain import Aggregate
 from ..events import ClanCreatedEvent
 from ..value_objects import ClanName, ClanTag
 
 
-class Clan(BaseAggregate):
+class Clan(Aggregate):
     def __init__(
         self,
         clan_id: UUID,
@@ -24,7 +24,7 @@ class Clan(BaseAggregate):
         self.created_at = created_at
 
     @classmethod
-    def create(
+    def create(  # type: ignore
         cls,
         clan_name: str,
         clan_tag: str,

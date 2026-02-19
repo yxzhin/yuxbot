@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 
 from .....services.clans.infra.dto import ClanDTO
+from .....shared.infra.dto import BaseResponseDTO
 
 
 class CreateClanRequestDTO(BaseModel):
@@ -9,7 +10,5 @@ class CreateClanRequestDTO(BaseModel):
     owner_id: int
 
 
-class CreateClanResponseDTO(BaseModel):
-    message: str
-    success: bool
+class CreateClanResponseDTO(BaseResponseDTO):
     clan: ClanDTO | None

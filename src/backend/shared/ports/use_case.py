@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
 
-class BaseUseCase(ABC):
+class UseCase(ABC):
     @abstractmethod
     async def execute(self): ...

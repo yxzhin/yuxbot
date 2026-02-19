@@ -1,12 +1,12 @@
 from datetime import datetime
 from typing import Self
 
-from .....shared.ports import BaseAggregate
+from .....shared.domain import Aggregate
 from ..events import PlayerCreatedEvent
 from ..value_objects import Money
 
 
-class Player(BaseAggregate):
+class Player(Aggregate):
     def __init__(
         self,
         player_id: int,
@@ -21,7 +21,7 @@ class Player(BaseAggregate):
         self.created_at = created_at
 
     @classmethod
-    def create(
+    def create(  # type: ignore
         cls,
         player_id: int,
         username: str,

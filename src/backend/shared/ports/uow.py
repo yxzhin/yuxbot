@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Self
 
 
-class BaseUnitOfWork(ABC):
+class UnitOfWork(ABC):
     @abstractmethod
     async def __aenter__(self) -> Self: ...
 

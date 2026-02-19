@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from uuid import UUID
 
-from ....shared.infra.events import DomainEvent
+from ....shared.domain import DomainEvent
 from .value_objects import ClanName, ClanTag
 
 

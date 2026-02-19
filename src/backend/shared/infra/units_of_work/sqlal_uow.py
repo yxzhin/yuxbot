@@ -2,10 +2,10 @@ from traceback import print_exc
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ...ports import BaseUnitOfWork
+from ...ports import UnitOfWork
 
 
-class SqlAlchemyUnitOfWork(BaseUnitOfWork):
+class SqlAlchemyUnitOfWork(UnitOfWork):
     def __init__(self, db_sess: AsyncSession):
         self.db_sess = db_sess
 

@@ -1,6 +1,6 @@
-from ....shared.ports import BaseUnitOfWork
+from ....shared.ports import UnitOfWork
 from ..ports import PlayerRepository
 
 
-class PlayerUnitOfWork(BaseUnitOfWork):
+class PlayerUnitOfWork(UnitOfWork):
     player_repo: PlayerRepository

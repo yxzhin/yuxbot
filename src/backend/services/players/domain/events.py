@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from ....shared.infra.events import DomainEvent
+from ....shared.domain import DomainEvent
 from .value_objects import Money
 
 

@@ -1,7 +1,7 @@
-from ..infra.events import DomainEvent
+from .domain_event import DomainEvent
 
 
-class BaseEntity:
+class Entity:
     def __init__(self):
         self._events: list[DomainEvent] = []
 

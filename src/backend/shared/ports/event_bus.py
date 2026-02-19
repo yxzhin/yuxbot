@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 from collections.abc import Iterable
 
-from ..infra.events import DomainEvent
+from ..domain import DomainEvent
 
 
-class BaseEventBus(ABC):
+class EventBus(ABC):
     @abstractmethod
     async def publish(self, events: Iterable[DomainEvent]) -> None: ...

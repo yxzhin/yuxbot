@@ -1,9 +1,9 @@
 from traceback import print_exc
 
-from ...ports import BaseUnitOfWork
+from ...ports import UnitOfWork
 
 
-class InMemoryUnitOfWork(BaseUnitOfWork):
+class InMemoryUnitOfWork(UnitOfWork):
     async def _commit(self) -> None:
         print("[InMemory UoW] committed")
 

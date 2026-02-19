@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 from .....services.players.infra.dto import PlayerDTO
-from .....shared.ports import BaseResponseDTO
+from .....shared.infra.dto import BaseResponseDTO
 
 
 class GetPlayerResponseDTO(BaseResponseDTO):
