@@ -8,7 +8,7 @@ from src.backend.services.players.domain.value_objects import Money
 
 
 async def test_player_initialization():
-    player = Player(player_id=1, username="testuser")
+    player = Player.create(player_id=1, username="testuser")
 
     assert player.player_id == 1
     assert player.username == "testuser"
@@ -31,13 +31,13 @@ async def test_player_initialization():
 
 
 async def test_player_update_balance():
-    player = Player(player_id=1, username="testuser", balance=Money(100))
+    player = Player.create(player_id=1, username="testuser")
 
     player.update_balance(50)
-    assert player.balance.amount == 150
+    assert player.balance.amount == 50
 
     player.update_balance(-30)
-    assert player.balance.amount == 120
+    assert player.balance.amount == 20
 
     player.update_balance(-player.balance.amount)
     assert player.balance.amount == 0
@@ -47,7 +47,7 @@ async def test_player_update_balance():
 
 
 async def test_player_set_balance():
-    player = Player(player_id=1, username="testuser", balance=Money(100))
+    player = Player.create(player_id=1, username="testuser")
 
     player.set_balance(500)
     assert player.balance.amount == 500

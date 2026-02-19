@@ -8,3 +8,7 @@ class InsufficientBalanceError(PlayersDomainError):
 
 class PlayerAlreadyExistsError(PlayersDomainError):
     pass
+
+
+class PlayerNotFoundError(PlayersDomainError):
+    pass

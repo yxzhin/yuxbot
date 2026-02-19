@@ -18,5 +18,11 @@ class InMemoryPlayerRepository(PlayerRepository):
                 return player
         return None
 
-    async def create(self, player: Player):
+    async def save(self, player: Player) -> None:
+        for player_ in self.players:
+            if player_.player_id == player.player_id:
+                index = self.players.index(player)
+                self.players[index] = player
+                return
         self.players.append(player)
+        return

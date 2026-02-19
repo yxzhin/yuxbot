@@ -17,8 +17,7 @@ from sqlalchemy.ext.asyncio import (
 from src.backend.app.api.di.providers import (
     DBSessionProvider,
     EventBusProvider,
-    RepositoryProvider,
-    UnitOfWorkProvider,
+    UnitOfWorkFactoryProvider,
     UseCaseProvider,
 )
 from src.backend.app.api.v1.routers import clans_router, players_router
@@ -72,8 +71,7 @@ async def app_container(
     app_container = make_async_container(
         DBSessionProvider(db_sess),
         EventBusProvider(),
-        RepositoryProvider(),
-        UnitOfWorkProvider(),
+        UnitOfWorkFactoryProvider(),
         UseCaseProvider(),
     )
     yield app_container

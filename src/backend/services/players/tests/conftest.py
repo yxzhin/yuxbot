@@ -1,16 +1,22 @@
 import pytest
 
-from src.backend.services.players.infra.repositories.inmemory import (
-    InMemoryPlayerRepository,
+from src.backend.services.players.infra.units_of_work.inmemory import (
+    InMemoryPlayerUnitOfWork,
 )
 from src.backend.services.players.use_cases import CreatePlayerUseCase
+from src.backend.shared.infra.events import InMemoryEventBus
 
 
 @pytest.fixture
-def player_repo():
-    return InMemoryPlayerRepository()
+def event_bus():
+    return InMemoryEventBus()
 
 
 @pytest.fixture
-def create_player_uc(player_repo):
-    return CreatePlayerUseCase(player_repo)
+async def player_uow():
+    return lambda: InMemoryPlayerUnitOfWork()
+
+
+@pytest.fixture
+def create_player_uc(player_uow, event_bus):
+    return CreatePlayerUseCase(player_uow, event_bus)

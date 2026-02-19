@@ -1,14 +1,15 @@
 from dataclasses import dataclass
 from uuid import UUID
 
-from ....shared.events import DomainEvent
+from ....shared.infra.events import DomainEvent
+from .value_objects import ClanName, ClanTag
 
 
 @dataclass(slots=True)
 class ClanCreatedEvent(DomainEvent):
     clan_id: UUID
-    clan_name: str
-    clan_tag: str
+    clan_name: ClanName
+    clan_tag: ClanTag
     owner_id: int
 
 

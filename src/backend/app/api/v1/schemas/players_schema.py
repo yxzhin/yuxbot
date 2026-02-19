@@ -1,6 +1,11 @@
 from pydantic import BaseModel
 
 from .....services.players.infra.dto import PlayerDTO
+from .....shared.ports import BaseResponseDTO
+
+
+class GetPlayerResponseDTO(BaseResponseDTO):
+    player: PlayerDTO | None
 
 
 class CreatePlayerRequestDTO(BaseModel):
@@ -8,7 +13,5 @@ class CreatePlayerRequestDTO(BaseModel):
     username: str
 
 
-class CreatePlayerResponseDTO(BaseModel):
-    message: str
-    success: bool
+class CreatePlayerResponseDTO(BaseResponseDTO):
     player: PlayerDTO | None

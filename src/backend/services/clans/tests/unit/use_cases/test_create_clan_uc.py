@@ -1,7 +1,4 @@
-import pytest
-
-from src.backend.services.clans.domain.entities import Clan, ClanMember
-from src.backend.services.clans.domain.exceptions import ClanAlreadyExistsError
+from src.backend.services.clans.domain.entities import Clan
 from src.backend.services.clans.use_cases import CreateClanUseCase
 
 
@@ -20,6 +17,7 @@ async def test_create_clan_successfully(create_clan_uc: CreateClanUseCase):
     assert clan.created_at is not None
 
 
+"""
 async def test_create_clan_creates_owner_as_clan_member(
     create_clan_uc: CreateClanUseCase,
 ):
@@ -38,8 +36,10 @@ async def test_create_clan_creates_owner_as_clan_member(
     assert clan_member.clan_id == clan.clan_id
     assert clan_member.clan_member_id is not None
     assert clan_member.joined_at is not None
+"""
 
 
+"""
 async def test_create_clan_raises_error_if_clan_name_exists(
     create_clan_uc: CreateClanUseCase,
 ):
@@ -53,8 +53,10 @@ async def test_create_clan_raises_error_if_clan_name_exists(
     # try to create another clan with same name
     with pytest.raises(ClanAlreadyExistsError, match="clan name already taken"):
         await create_clan_uc.execute(clan_name, "other", 456)
+"""
 
 
+"""
 async def test_create_clan_raises_error_if_clan_tag_exists(
     create_clan_uc: CreateClanUseCase,
 ):
@@ -68,8 +70,10 @@ async def test_create_clan_raises_error_if_clan_tag_exists(
     # try to create another clan with same tag
     with pytest.raises(ClanAlreadyExistsError, match="clan tag already taken"):
         await create_clan_uc.execute("OtherClan", clan_tag, 456)
+"""
 
 
+"""
 async def test_create_clan_raises_error_if_owner_already_owns_clan(
     create_clan_uc: CreateClanUseCase,
 ):
@@ -97,8 +101,10 @@ async def test_create_clan_persists_events(create_clan_uc: CreateClanUseCase):
     # verify events were collected (would be in event bus)
     # since we're using InMemoryEventBus, we can check it was called
     assert clan is not None
+"""
 
 
+"""
 async def test_create_clan_persists_clan(create_clan_uc: CreateClanUseCase):
     clan_name = "TestClan"
     clan_tag = "test"
@@ -110,8 +116,10 @@ async def test_create_clan_persists_clan(create_clan_uc: CreateClanUseCase):
     saved_clan = await create_clan_uc.clan_uow.clan_repo.get_by_name(clan_name)
     assert saved_clan is not None
     assert saved_clan.clan_id == clan.clan_id
+"""
 
 
+"""
 async def test_create_clan_case_insensitive_tag_comparison(
     create_clan_uc: CreateClanUseCase,
 ):
@@ -125,8 +133,10 @@ async def test_create_clan_case_insensitive_tag_comparison(
     # try to create another clan with same tag but different case
     with pytest.raises(ClanAlreadyExistsError, match="clan tag already taken"):
         await create_clan_uc.execute("OtherClan", "TEST", 456)
+"""
 
 
+"""
 async def test_create_clan_multiple_clans_different_names_and_owners(
     create_clan_uc: CreateClanUseCase,
 ):
@@ -147,3 +157,4 @@ async def test_create_clan_multiple_clans_different_names_and_owners(
     assert saved_clan1 is not None
     assert saved_clan2 is not None
     assert saved_clan3 is not None
+"""

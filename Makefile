@@ -18,7 +18,7 @@ down:
 run-server:
 	uv sync
 	uv run alembic upgrade head
-	uv run uvicorn src.backend.app.api.main:app --host 0.0.0.0 --port 8000 --reload
+	uv run uvicorn src.backend.app.api.main:app --host 0.0.0.0 --port 8000
 
 run-bot:
 	uv sync

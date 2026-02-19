@@ -8,8 +8,7 @@ from ...shared.utils import TraceIDMiddleware, lifespan
 from .di.providers import (
     DBSessionProvider,
     EventBusProvider,
-    RepositoryProvider,
-    UnitOfWorkProvider,
+    UnitOfWorkFactoryProvider,
     UseCaseProvider,
 )
 from .v1 import api_v1_router
@@ -39,8 +38,7 @@ app.include_router(api_v1_router)
 container = make_async_container(
     DBSessionProvider(),
     EventBusProvider(),
-    RepositoryProvider(),
-    UnitOfWorkProvider(),
+    UnitOfWorkFactoryProvider(),
     UseCaseProvider(),
 )
 

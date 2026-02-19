@@ -1,12 +1,13 @@
 from datetime import datetime
+from typing import Self
 from uuid import UUID, uuid4
 
-from .....shared.events import DomainEvent
+from .....shared.ports import BaseAggregate
 from ..events import ClanCreatedEvent
 from ..value_objects import ClanName, ClanTag
 
 
-class Clan:
+class Clan(BaseAggregate):
     def __init__(
         self,
         clan_id: UUID,
@@ -15,12 +16,12 @@ class Clan:
         owner_id: int,
         created_at: datetime,
     ):
+        super().__init__()
         self.clan_id = clan_id
         self.clan_name = clan_name
         self.clan_tag = clan_tag
         self.owner_id = owner_id
         self.created_at = created_at
-        self._events: list[DomainEvent] = []
 
     @classmethod
     def create(
@@ -28,7 +29,7 @@ class Clan:
         clan_name: str,
         clan_tag: str,
         owner_id: int,
-    ) -> "Clan":
+    ) -> Self:
         clan_id = uuid4()
         created_at = datetime.now()
         clan_name_ = ClanName(clan_name)
@@ -42,8 +43,3 @@ class Clan:
         )
         clan._events.append(event)
         return clan
-
-    def pull_events(self):
-        events = self._events.copy()
-        self._events.clear()
-        return events
