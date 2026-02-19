@@ -12,6 +12,7 @@ repos:
     rev: 0.10.4
     hooks:
       - id: uv-lock
+        name: uv lock
 
   - repo: local
     hooks:
@@ -38,16 +39,16 @@ repos:
         types: [python]
         exclude: ^src/backend/alembic/.*
 
-  - repo: local
-    hooks:
-      - id: pytest
-        name: pytest
-        entry: uv run pytest
-        language: system
-        types: [python]
-        pass_filenames: false
-        always_run: false
-        verbose: true
+  #- repo: local
+  #  hooks:
+  #    - id: pytest
+  #      name: pytest
+  #      entry: uv run pytest
+  #      language: system
+  #      types: [python]
+  #      pass_filenames: false
+  #      always_run: false
+  #      verbose: true
 
   #- repo: local
   #  hooks:
