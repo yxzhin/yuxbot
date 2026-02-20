@@ -11,7 +11,7 @@ from ...services import ClanService
 
 class InMemoryClanUnitOfWork(InMemoryUnitOfWork, ClanUnitOfWork):
     async def __aenter__(self) -> Self:
-        self.clan_repo = InMemoryClanRepository()
-        self.clan_member_repo = InMemoryClanMemberRepository()
+        self.clan_repo = InMemoryClanRepository(self.inm_storage)
+        self.clan_member_repo = InMemoryClanMemberRepository(self.inm_storage)
         self.clan_service = ClanService(self.clan_repo, self.clan_member_repo)
         return self
