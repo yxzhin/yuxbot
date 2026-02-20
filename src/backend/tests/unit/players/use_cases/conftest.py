@@ -1,11 +1,9 @@
-from asyncio import get_event_loop
-
 import pytest
 
 from src.backend.services.players.infra.units_of_work.inmemory import (
     InMemoryPlayerUnitOfWork,
 )
-from src.backend.services.players.use_cases import CreatePlayerUseCase
+from src.backend.services.players.use_cases import CreatePlayerUseCase, GetPlayerUseCase
 from src.backend.shared.infra.events import InMemoryEventBus
 from src.backend.shared.infra.units_of_work import InMemoryStorage
 
@@ -27,7 +25,9 @@ async def player_uow_factory(inm_storage):
 
 @pytest.fixture
 def create_player_uc(player_uow_factory, event_bus):
-    async def _create_player_uc():
-        return CreatePlayerUseCase(player_uow_factory, event_bus)
+    return CreatePlayerUseCase(player_uow_factory, event_bus)
 
-    return get_event_loop().run_until_complete(_create_player_uc())
+
+@pytest.fixture
+def get_player_uc(player_uow_factory):
+    return GetPlayerUseCase(player_uow_factory)

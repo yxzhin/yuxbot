@@ -4,7 +4,7 @@ from src.backend.services.players.domain.exceptions import PlayerAlreadyExistsEr
 
 
 async def test_create_player_successfully(create_player_uc):
-    player = await create_player_uc.execute(player_id=73, username="ril73")
+    player = await create_player_uc.execute(73, "ril73")
 
     assert player.player_id == 73
     assert player.username == "ril73"
@@ -12,8 +12,8 @@ async def test_create_player_successfully(create_player_uc):
     assert player.created_at is not None
 
 
-async def test_create_player_with_duplicate_id(create_player_uc):
-    await create_player_uc.execute(player_id=73, username="ril73")
+async def test_create_player_with_duplicate_id_raises(create_player_uc):
+    await create_player_uc.execute(73, "ril73")
 
     with pytest.raises(PlayerAlreadyExistsError):
-        await create_player_uc.execute(player_id=73, username="ril37")
+        await create_player_uc.execute(73, "ril37")
