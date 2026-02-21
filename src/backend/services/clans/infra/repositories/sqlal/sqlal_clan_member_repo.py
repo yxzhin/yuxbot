@@ -32,13 +32,15 @@ class SqlAlchemyClanMemberRepository(ClanMemberRepository):
         clan_member = ClanMemberMapper.to_domain(result)
         return clan_member
 
-    async def get_by_clan_id(self, clan_id: UUID) -> ClanMember | None:
+    async def get_by_clan_id(self, clan_id: UUID) -> list[ClanMember]:
         query = await self.db_sess.execute(
             select(ClanMemberModel).where(ClanMemberModel.clan_id == clan_id)
         )
-        result = query.scalar_one_or_none()
-        clan_member = ClanMemberMapper.to_domain(result)
-        return clan_member
+        result = query.scalars().all()
+        clan_members = [
+            ClanMemberMapper.to_domain(clan_member) for clan_member in result
+        ]
+        return clan_members  # type: ignore
 
     async def save(self, clan_member: ClanMember) -> None:
         query = await self.db_sess.execute(

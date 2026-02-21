@@ -22,11 +22,12 @@ class InMemoryClanMemberRepository(ClanMemberRepository):
                 return clan_member
         return None
 
-    async def get_by_clan_id(self, clan_id: UUID) -> ClanMember | None:
-        for clan_member in self.inm_storage.clan_members:
-            if clan_member.clan_id == clan_id:
-                return clan_member
-        return None
+    async def get_by_clan_id(self, clan_id: UUID) -> list[ClanMember]:
+        return [
+            clan_member
+            for clan_member in self.inm_storage.clan_members
+            if clan_member.clan_id == clan_id
+        ]
 
     async def save(self, clan_member: ClanMember) -> None:
         for clan_member_ in self.inm_storage.clan_members:

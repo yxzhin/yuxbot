@@ -23,7 +23,7 @@ class CreateClanUseCase(UseCase):
             )
             clan_member = await clan_uow.clan_service.add_player_to_clan(
                 owner_id,
-                clan.clan_id,
+                clan,
             )
 
         clan_events = clan.pull_events()

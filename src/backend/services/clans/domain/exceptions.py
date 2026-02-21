@@ -18,6 +18,10 @@ class ClanAlreadyExistsError(ClansDomainError):
     pass
 
 
+class ClanNotFoundError(ClansDomainError):
+    pass
+
+
 class ClanFullError(ClansDomainError):
     pass
 
