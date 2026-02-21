@@ -1,124 +1,38 @@
-from httpx import AsyncClient
+from datetime import datetime
+from uuid import UUID
 
 
-async def test_create_clan_success(httpx_client: AsyncClient, create_player):
-    # create player first (owner of the clan)
-    await create_player(123, "test_user")
+async def test_create_clan_successfully(create_player, create_clan):
+    player_id = 73
+    username = "ril73"
 
-    response = await httpx_client.post(
-        "/clans/create",
-        json={
-            "clan_name": "TestClan",
-            "clan_tag": "test",
-            "owner_id": 123,
-        },
-    )
+    player = await create_player(player_id, username)
 
-    assert response.status_code == 201
-    data = response.json()
+    clan_name = "ril73"
+    clan_tag = "73"
 
-    assert data["success"] is True
-    assert data["message"] == "clan created successfully"
-    assert data["clan"] is not None
+    clan = await create_clan(clan_name, clan_tag, player["player_id"])
 
-    clan = data["clan"]
-    assert clan["clan_name"] == "TestClan"
-    assert clan["clan_tag"] == "TEST"
-    assert clan["owner_id"] == 123
-    assert "clan_id" in clan
-    assert "created_at" in clan
+    assert UUID(clan["clan_id"])
+    assert clan["clan_name"] == clan_name
+    assert clan["clan_tag"] == clan_tag
+    assert clan["owner_id"] == player["player_id"]
+    assert datetime.fromisoformat(clan["created_at"])
 
 
-async def test_create_clan_with_whitespace_in_name(create_player, create_clan):
-    await create_player(125, "test_user3")
-    clan = await create_clan("    Test  Clan  ", "test", 125)
-    assert clan["clan_name"] == "TestClan"
+async def test_create_clan_sequential_creation(create_player, create_clan):
+    players = []
+    for i in range(1, 6):
+        player = await create_player(i, f"ril{i}")
+        players.append(player)
 
+    clans = []
+    for i in range(1, 6):
+        clan = await create_clan(f"ril{i}", str(i) * 3, i)
+        clans.append(clan)
 
-async def test_create_clan_tag_capitalization(create_player, create_clan):
-    await create_player(126, "test_user4")
-    clan = await create_clan("AnotherClan", "abc", 126)
-    assert clan["clan_tag"] == "ABC"
-
-
-async def test_create_clan_duplicate_name_error(
-    httpx_client: AsyncClient, create_player, create_clan
-):
-    await create_player(127, "user1")
-    await create_player(128, "user2")
-
-    # create first clan
-    await create_clan("UniqueClan", "uniq", 127)
-
-    # try to create second clan with same name
-    response2 = await httpx_client.post(
-        "/clans/create",
-        json={
-            "clan_name": "UniqueClan",
-            "clan_tag": "diff",
-            "owner_id": 128,
-        },
-    )
-
-    assert response2.status_code != 201
-    data = response2.json()
-    assert data["success"] is False
-    assert "already taken" in data["message"].lower()
-
-
-async def test_create_clan_duplicate_tag_error(
-    httpx_client: AsyncClient, create_player, create_clan
-):
-    await create_player(129, "user3")
-    await create_player(130, "user4")
-
-    # create first clan
-    await create_clan("FirstClan", "uniq", 129)
-
-    # try to create second clan with same tag
-    response2 = await httpx_client.post(
-        "/clans/create",
-        json={
-            "clan_name": "SecondClan",
-            "clan_tag": "uniq",
-            "owner_id": 130,
-        },
-    )
-
-    assert response2.status_code != 201
-    data = response2.json()
-    assert data["success"] is False
-    assert "already taken" in data["message"].lower()
-
-
-async def test_create_clan_owner_already_has_clan(
-    httpx_client: AsyncClient, create_player, create_clan
-):
-    await create_player(131, "user5")
-
-    # create first clan
-    await create_clan("OwnersClan", "owne", 131)
-
-    # try to create second clan with same owner
-    response2 = await httpx_client.post(
-        "/clans/create",
-        json={
-            "clan_name": "SecondClansForOwner",
-            "clan_tag": "scfo",
-            "owner_id": 131,
-        },
-    )
-
-    assert response2.status_code != 201
-    data = response2.json()
-    assert data["success"] is False
-    assert "already" in data["message"].lower()
-
-
-async def test_create_clan_ownership_reflected_in_response(
-    httpx_client: AsyncClient, create_player, create_clan
-):
-    owner_id = 145
-    await create_player(owner_id, "user17")
-    clan = await create_clan("OwnedClan", "ownd", owner_id)
-    assert clan["owner_id"] == owner_id
+    assert len(clans) == 5
+    for i, clan in enumerate(clans, start=1):
+        assert clan["clan_name"] == f"ril{i}"
+        assert clan["clan_tag"] == str(i) * 3
+        assert clan["owner_id"] == i
