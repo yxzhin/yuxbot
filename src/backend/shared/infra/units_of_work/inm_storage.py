@@ -3,3 +3,5 @@ class InMemoryStorage:
         self.players = []
         self.clans = []
         self.clan_members = []
+        self.items = []
+        self.inventory_items = []
