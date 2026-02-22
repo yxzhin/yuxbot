@@ -16,11 +16,9 @@ class PlayerModel(Base):
     )
     balance: Mapped[int] = mapped_column(
         Integer(),
-        default=0,
         nullable=False,
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
-        default=datetime.now,
         nullable=False,
     )

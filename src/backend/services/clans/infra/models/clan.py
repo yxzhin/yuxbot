@@ -1,5 +1,5 @@
 from datetime import datetime
-from uuid import UUID, uuid4
+from uuid import UUID
 
 from sqlalchemy import DateTime, ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID as UUIDPG
@@ -14,7 +14,6 @@ class ClanModel(Base):
     clan_id: Mapped[UUID] = mapped_column(
         UUIDPG(as_uuid=True),
         primary_key=True,
-        default=uuid4,
     )
     clan_name: Mapped[str] = mapped_column(
         String(30),
@@ -33,6 +32,5 @@ class ClanModel(Base):
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
-        default=datetime.now,
         nullable=False,
     )
