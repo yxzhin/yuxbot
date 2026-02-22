@@ -46,10 +46,7 @@ class ClanService(BaseClanService):
         if existing is not None:
             raise PlayerAlreadyInClanError("this player is already a member of a clan")
 
-        clan_member = ClanMember.create(
-            player_id=player_id,
-            clan_id=clan.clan_id,
-        )
+        clan_member = clan.add_member(player_id)
 
         await self.clan_member_repo.save(clan_member)
 

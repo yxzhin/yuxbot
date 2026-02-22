@@ -1,12 +1,10 @@
 from datetime import datetime
-from typing import Self
-from uuid import UUID, uuid4
+from uuid import UUID
 
-from .....shared.domain import Aggregate
-from ..events import ClanMemberCreatedEvent
+from .....shared.domain import Entity
 
 
-class ClanMember(Aggregate):
+class ClanMember(Entity):
     def __init__(
         self,
         clan_member_id: UUID,
@@ -19,20 +17,3 @@ class ClanMember(Aggregate):
         self.player_id = player_id
         self.clan_id = clan_id
         self.joined_at = joined_at
-
-    @classmethod
-    def create(  # type: ignore
-        cls,
-        player_id: int,
-        clan_id: UUID,
-    ) -> Self:
-        clan_member_id = uuid4()
-        joined_at = datetime.now()
-        clan_member = cls(clan_member_id, player_id, clan_id, joined_at)
-        event = ClanMemberCreatedEvent.new(
-            clan_member_id=clan_member_id,
-            player_id=player_id,
-            clan_id=clan_id,
-        )
-        clan_member._events.append(event)
-        return clan_member

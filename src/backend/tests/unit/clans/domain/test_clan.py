@@ -2,10 +2,13 @@ from datetime import datetime
 from uuid import UUID
 
 from src.backend.services.clans.domain.entities import Clan
-from src.backend.services.clans.domain.events import ClanCreatedEvent
+from src.backend.services.clans.domain.events import (
+    ClanCreatedEvent,
+    ClanMemberJoinedEvent,
+)
 
 
-async def test_clan_create_success():
+async def test_clan_create_successfully():
     clan = Clan.create("ril73", "73", 73)
 
     assert isinstance(clan.clan_id, UUID)
@@ -28,3 +31,17 @@ async def test_clan_create_emits_events():
     # modifying returned list shouldn't affect internal state
     events.append("ril")  # type: ignore
     assert len(clan._events) == 0
+
+
+async def test_clan_add_member_successfully():
+    clan = Clan.create("ril73", "73", 73)
+    clan_member = clan.add_member(73)
+
+    assert isinstance(clan_member.clan_member_id, UUID)
+    assert clan_member.player_id == 73
+    assert clan_member.clan_id == clan.clan_id
+    assert isinstance(clan_member.joined_at, datetime)
+
+    events = clan.pull_events()
+    assert len(events) == 2
+    assert isinstance(events[1], ClanMemberJoinedEvent)
