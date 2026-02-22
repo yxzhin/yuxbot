@@ -32,8 +32,6 @@ class Player(Aggregate):
         event = PlayerCreatedEvent.new(
             player_id=player_id,
             username=username,
-            balance=balance,
-            created_at=created_at,
         )
         player._events.append(event)
         return player

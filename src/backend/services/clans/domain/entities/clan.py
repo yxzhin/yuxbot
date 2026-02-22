@@ -55,7 +55,7 @@ class Clan(Aggregate):
         )
         event = ClanMemberJoinedEvent.new(
             player_id=player_id,
-            clan_id=clan_member.clan_id,
+            clan_name=self.clan_name,
         )
         self._events.append(event)
         return clan_member

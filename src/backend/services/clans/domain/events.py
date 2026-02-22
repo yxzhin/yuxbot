@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from uuid import UUID
 
 from ....shared.domain import DomainEvent
 from .value_objects import ClanName, ClanTag
@@ -15,4 +14,4 @@ class ClanCreatedEvent(DomainEvent):
 @dataclass(slots=True)
 class ClanMemberJoinedEvent(DomainEvent):
     player_id: int
-    clan_id: UUID
+    clan_name: str
