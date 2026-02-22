@@ -12,3 +12,11 @@ class PlayerAlreadyExistsError(PlayersDomainError):
 
 class PlayerNotFoundError(PlayersDomainError):
     pass
+
+
+class ItemAlreadyExistsError(PlayersDomainError):
+    pass
+
+
+class ItemNotFoundError(PlayersDomainError):
+    pass

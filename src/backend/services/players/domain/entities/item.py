@@ -1,11 +1,11 @@
 from typing import Self
 from uuid import UUID, uuid4
 
-from .....shared.domain import Aggregate
+from .....shared.domain import EntityFactory
 from ..events import ItemCreatedEvent
 
 
-class Item(Aggregate):
+class Item(EntityFactory):
     def __init__(
         self,
         item_id: UUID,

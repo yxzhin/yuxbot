@@ -4,7 +4,7 @@ from typing import Self
 from .entity import Entity
 
 
-class Aggregate(Entity, ABC):
+class EntityFactory(Entity, ABC):
     @classmethod
     @abstractmethod
     def create(cls) -> Self: ...

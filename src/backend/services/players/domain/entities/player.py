@@ -1,12 +1,12 @@
 from datetime import datetime
 from typing import Self
 
-from .....shared.domain import Aggregate
+from .....shared.domain import EntityFactory
 from ..events import PlayerCreatedEvent
 from ..value_objects import Money
 
 
-class Player(Aggregate):
+class Player(EntityFactory):
     def __init__(
         self,
         player_id: int,

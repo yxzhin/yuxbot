@@ -2,13 +2,13 @@ from datetime import datetime
 from typing import Self
 from uuid import UUID, uuid4
 
-from .....shared.domain import Aggregate
+from .....shared.domain import EntityFactory
 from ..events import ClanCreatedEvent, ClanMemberJoinedEvent
 from ..value_objects import ClanName, ClanTag
 from .clan_member import ClanMember
 
 
-class Clan(Aggregate):
+class Clan(EntityFactory):
     def __init__(
         self,
         clan_id: UUID,
@@ -45,13 +45,9 @@ class Clan(Aggregate):
         return clan
 
     def add_member(self, player_id: int) -> ClanMember:
-        clan_member_id = uuid4()
-        joined_at = datetime.now()
-        clan_member = ClanMember(
-            clan_member_id=clan_member_id,
+        clan_member = ClanMember.create(
             player_id=player_id,
             clan_id=self.clan_id,
-            joined_at=joined_at,
         )
         event = ClanMemberJoinedEvent.new(
             player_id=player_id,

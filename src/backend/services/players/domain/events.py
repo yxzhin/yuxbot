@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from uuid import UUID
 
 from ....shared.domain import DomainEvent
 
@@ -18,5 +19,5 @@ class ItemCreatedEvent(DomainEvent):
 @dataclass(slots=True)
 class InventoryItemAddedEvent(DomainEvent):
     player_id: int
-    item_name: str
+    item_id: UUID
     item_amount: int

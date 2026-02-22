@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from sqlalchemy import select, update
+from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ....domain.entities import InventoryItem
@@ -58,5 +58,13 @@ class SqlAlchemyInventoryItemRepository(InventoryItemRepository):
                 item_amount=inventory_item.item_amount,
             )
             .execution_options(synchronize_session="fetch")
+        )
+        await self.db_sess.flush()
+
+    async def delete(self, inventory_item: InventoryItem) -> None:
+        await self.db_sess.execute(
+            delete(InventoryItemModel).where(
+                InventoryItemModel.inventory_item_id == inventory_item.inventory_item_id
+            )
         )
         await self.db_sess.flush()

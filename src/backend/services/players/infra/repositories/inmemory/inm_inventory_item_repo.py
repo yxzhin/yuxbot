@@ -30,3 +30,7 @@ class InMemoryInventoryItemRepository(InventoryItemRepository):
                 return
         self.inm_storage.inventory_items.append(inventory_item)
         return
+
+    async def delete(self, inventory_item: InventoryItem) -> None:
+        self.inm_storage.inventory_items.remove(inventory_item)
+        return None
