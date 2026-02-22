@@ -1,4 +1,4 @@
-from typing import Self
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from ......shared.infra.units_of_work import SqlAlchemyUnitOfWork
 from ....ports import PlayerUnitOfWork
@@ -11,7 +11,8 @@ from ...services import InventoryService, PlayerService
 
 
 class SqlAlchemyPlayerUnitOfWork(SqlAlchemyUnitOfWork, PlayerUnitOfWork):
-    async def __aenter__(self) -> Self:
+    def __init__(self, db_sess: AsyncSession):
+        super().__init__(db_sess)
         self.player_repo = SqlAlchemyPlayerRepository(self.db_sess)
         self.player_service = PlayerService(self.player_repo)
         self.item_repo = SqlAlchemyItemRepository(self.db_sess)
@@ -19,4 +20,3 @@ class SqlAlchemyPlayerUnitOfWork(SqlAlchemyUnitOfWork, PlayerUnitOfWork):
         self.inventory_service = InventoryService(
             self.item_repo, self.inventory_item_repo
         )
-        return self

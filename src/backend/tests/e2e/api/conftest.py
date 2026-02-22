@@ -54,12 +54,24 @@ async def db_sess(test_engine: AsyncEngine) -> AsyncGenerator[AsyncSession, Any]
         async with sessionmaker() as session:
             await session.begin_nested()
 
-            @event.listens_for(session.sync_session, "after_transaction_end")
             def restart_savepoint(sess, trans):
-                if trans.nested and not trans._parent.nested:
+                if (
+                    trans.nested
+                    and not getattr(trans, "_parent", None)
+                    or not trans._parent
+                ):
                     sess.begin_nested()
 
-            yield session
+            event.listen(
+                session.sync_session, "after_transaction_end", restart_savepoint
+            )
+
+            try:
+                yield session
+            finally:
+                event.remove(
+                    session.sync_session, "after_transaction_end", restart_savepoint
+                )
 
         await transaction.rollback()
 

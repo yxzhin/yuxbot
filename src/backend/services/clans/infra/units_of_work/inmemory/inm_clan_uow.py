@@ -1,6 +1,4 @@
-from typing import Self
-
-from ......shared.infra.units_of_work import InMemoryUnitOfWork
+from ......shared.infra.units_of_work import InMemoryStorage, InMemoryUnitOfWork
 from ....ports import ClanUnitOfWork
 from ...repositories.inmemory import (
     InMemoryClanMemberRepository,
@@ -10,8 +8,8 @@ from ...services import ClanService
 
 
 class InMemoryClanUnitOfWork(InMemoryUnitOfWork, ClanUnitOfWork):
-    async def __aenter__(self) -> Self:
+    def __init__(self, inm_storage: InMemoryStorage):
+        super().__init__(inm_storage)
         self.clan_repo = InMemoryClanRepository(self.inm_storage)
         self.clan_member_repo = InMemoryClanMemberRepository(self.inm_storage)
         self.clan_service = ClanService(self.clan_repo, self.clan_member_repo)
-        return self

@@ -1,11 +1,12 @@
 from pydantic import BaseModel
 
-from .....services.players.infra.dto import PlayerDTO
+from .....services.players.infra.dto import InventoryItemDTO, PlayerDTO
 from .....shared.infra.dto import BaseResponseDTO
 
 
 class GetPlayerResponseDTO(BaseResponseDTO):
-    player: PlayerDTO | None
+    player: PlayerDTO
+    inventory: list[InventoryItemDTO]
 
 
 class CreatePlayerRequestDTO(BaseModel):
