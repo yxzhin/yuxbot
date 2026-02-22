@@ -14,6 +14,10 @@ class PlayerNotFoundError(PlayersDomainError):
     pass
 
 
+class InsufficientInventoryItemAmountError(PlayersDomainError):
+    pass
+
+
 class ItemAlreadyExistsError(PlayersDomainError):
     pass
 
