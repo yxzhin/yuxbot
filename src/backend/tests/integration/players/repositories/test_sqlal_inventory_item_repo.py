@@ -1,6 +1,7 @@
 from uuid import uuid4
 
 from src.backend.services.players.domain.entities import InventoryItem
+from src.backend.services.players.domain.value_objects import ItemAmount
 
 
 async def test_save_inserts_new_inventory_item(inventory_item_repo_factory):
@@ -28,7 +29,7 @@ async def test_save_updates_existing_inventory_item(inventory_item_repo_factory)
 
     player_id = 37
     item_id = uuid4()
-    item_amount = 37
+    item_amount = ItemAmount(37)
 
     inventory_item.player_id = player_id
     inventory_item.item_id = item_id
@@ -42,7 +43,7 @@ async def test_save_updates_existing_inventory_item(inventory_item_repo_factory)
 
     assert get_inventory_item.player_id == player_id
     assert get_inventory_item.item_id == item_id
-    assert get_inventory_item.item_amount == item_amount
+    assert get_inventory_item.item_amount.amount == item_amount.amount
 
 
 async def test_get_inventory_items_by_player_id(inventory_item_repo_factory):

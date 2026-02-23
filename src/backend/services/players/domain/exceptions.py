@@ -2,7 +2,7 @@ class PlayersDomainError(Exception):
     pass
 
 
-class InsufficientBalanceError(PlayersDomainError):
+class InsufficientAmountError(PlayersDomainError):
     pass
 
 
@@ -11,10 +11,6 @@ class PlayerAlreadyExistsError(PlayersDomainError):
 
 
 class PlayerNotFoundError(PlayersDomainError):
-    pass
-
-
-class InsufficientInventoryItemAmountError(PlayersDomainError):
     pass
 
 

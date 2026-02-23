@@ -41,7 +41,7 @@ class InventoryService(BaseInventoryService):
 
         for inventory_item in inventory_items:
             if inventory_item.item_id == item.item_id:
-                new_amount = inventory_item.item_amount + item_amount
+                new_amount = inventory_item.item_amount.amount + item_amount
                 if new_amount < 0:
                     await self.inventory_item_repo.delete(inventory_item)
                     return None

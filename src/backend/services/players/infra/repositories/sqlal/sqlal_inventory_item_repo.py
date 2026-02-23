@@ -55,7 +55,7 @@ class SqlAlchemyInventoryItemRepository(InventoryItemRepository):
             .values(
                 player_id=inventory_item.player_id,
                 item_id=inventory_item.item_id,
-                item_amount=inventory_item.item_amount,
+                item_amount=inventory_item.item_amount.amount,
             )
             .execution_options(synchronize_session="fetch")
         )

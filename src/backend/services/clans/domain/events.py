@@ -1,13 +1,12 @@
 from dataclasses import dataclass
 
 from ....shared.domain import DomainEvent
-from .value_objects import ClanName, ClanTag
 
 
 @dataclass(slots=True)
 class ClanCreatedEvent(DomainEvent):
-    clan_name: ClanName
-    clan_tag: ClanTag
+    clan_name: str
+    clan_tag: str
     owner_id: int
 
 

@@ -3,7 +3,7 @@ from uuid import UUID, uuid4
 
 from .....shared.domain import EntityFactory
 from ..events import InventoryItemAddedEvent
-from ..exceptions import InsufficientInventoryItemAmountError
+from ..value_objects import ItemAmount
 
 
 class InventoryItem(EntityFactory):
@@ -12,7 +12,7 @@ class InventoryItem(EntityFactory):
         inventory_item_id: UUID,
         player_id: int,
         item_id: UUID,
-        item_amount: int,
+        item_amount: ItemAmount,
     ):
         super().__init__()
         self.inventory_item_id = inventory_item_id
@@ -27,12 +27,9 @@ class InventoryItem(EntityFactory):
         item_id: UUID,
         item_amount: int,
     ) -> Self:
-        if item_amount < 1:
-            raise InsufficientInventoryItemAmountError(
-                "inventory item amount must be equal to or greater than 1"
-            )
         inventory_item_id = uuid4()
-        inventory_item = cls(inventory_item_id, player_id, item_id, item_amount)
+        item_amount_ = ItemAmount(item_amount)
+        inventory_item = cls(inventory_item_id, player_id, item_id, item_amount_)
         event = InventoryItemAddedEvent.new(
             player_id=player_id,
             item_id=item_id,

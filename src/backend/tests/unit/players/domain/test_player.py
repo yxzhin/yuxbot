@@ -4,7 +4,7 @@ import pytest
 
 from src.backend.services.players.domain.entities import Player
 from src.backend.services.players.domain.events import PlayerCreatedEvent
-from src.backend.services.players.domain.exceptions import InsufficientBalanceError
+from src.backend.services.players.domain.exceptions import InsufficientAmountError
 
 
 async def test_player_create_success():
@@ -43,7 +43,7 @@ async def test_player_update_balance():
     player.update_balance(-player.balance.amount)
     assert player.balance.amount == 0
 
-    with pytest.raises(InsufficientBalanceError):
+    with pytest.raises(InsufficientAmountError):
         player.update_balance(-100)
 
 
@@ -56,5 +56,5 @@ async def test_player_set_balance():
     player.set_balance(0)
     assert player.balance.amount == 0
 
-    with pytest.raises(InsufficientBalanceError):
+    with pytest.raises(InsufficientAmountError):
         player.set_balance(-50)
