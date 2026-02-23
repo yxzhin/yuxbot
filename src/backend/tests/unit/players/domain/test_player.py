@@ -8,10 +8,13 @@ from src.backend.services.players.domain.exceptions import InsufficientAmountErr
 
 
 async def test_player_create_success():
-    player = Player.create(73, "ril73")
+    player_id = 73
+    username = "ril73"
 
-    assert player.player_id == 73
-    assert player.username == "ril73"
+    player = Player.create(player_id, username)
+
+    assert player.player_id == player_id
+    assert player.username == username
     assert player.balance.amount == 0
     assert isinstance(player.created_at, datetime)
 

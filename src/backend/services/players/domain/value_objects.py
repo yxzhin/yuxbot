@@ -18,6 +18,4 @@ class ItemAmount:
 
     def __post_init__(self):
         if self.amount < 1:
-            raise InsufficientAmountError(
-                "item amount must be equal to or greater than 1"
-            )
+            raise InsufficientAmountError("item amount cannot be lesser than 1")
