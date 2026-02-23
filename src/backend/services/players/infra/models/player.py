@@ -9,7 +9,11 @@ from .....shared.utils import Base
 class PlayerModel(Base):
     __tablename__ = "players"
 
-    player_id: Mapped[int] = mapped_column(primary_key=True)
+    player_id: Mapped[int] = mapped_column(
+        Integer(),
+        primary_key=True,
+        unique=True,
+    )
     username: Mapped[str] = mapped_column(
         String(255),
         nullable=False,

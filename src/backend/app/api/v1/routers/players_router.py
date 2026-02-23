@@ -3,7 +3,6 @@ from fastapi import APIRouter, Response, status
 
 from .....services.players.infra.mappers import PlayerMapper
 from .....services.players.use_cases import CreatePlayerUseCase, GetPlayerUseCase
-from .....shared.utils import StructuredLogger
 from ..schemas import (
     CreatePlayerRequestDTO,
     CreatePlayerResponseDTO,
@@ -37,20 +36,12 @@ async def create_player(
     use_case: FromDishka[CreatePlayerUseCase],
     response: Response,
 ):
-    try:
-        player = await use_case.execute(dto.player_id, dto.username)
-        player_dto = PlayerMapper.to_dto(player)
-        response.status_code = status.HTTP_201_CREATED
-        return {
-            "message": "player created successfully",
-            "success": True,
-            "player": player_dto,
-        }
-    except Exception as e:
-        StructuredLogger.exception(str(e))
-        response.status_code = status.HTTP_400_BAD_REQUEST
-        return {
-            "message": f"an error occurred while creating player: {str(e)}",
-            "success": False,
-            "player": None,
-        }
+    player = await use_case.execute(dto.player_id, dto.username)
+    player_dto = PlayerMapper.to_dto(player)
+    response.status_code = status.HTTP_201_CREATED
+    return {
+        "message": "player created successfully",
+        "success": True,
+        "player": player_dto,
+    }
+    # "message": f"an error occurred while creating player: {str(e)}",

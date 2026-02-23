@@ -3,6 +3,14 @@ from uuid import uuid4
 import pytest
 
 from src.backend.services.clans.domain.entities import Clan, ClanMember
+from src.backend.services.clans.infra.units_of_work.sqlal import (
+    SqlAlchemyClanUnitOfWork,
+)
+
+
+@pytest.fixture
+async def clan_uow_factory(db_sess):
+    return lambda: SqlAlchemyClanUnitOfWork(db_sess)
 
 
 async def test_uow_commit_persists_data(

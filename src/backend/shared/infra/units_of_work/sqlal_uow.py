@@ -24,7 +24,7 @@ class SqlAlchemyUnitOfWork(UnitOfWork):
 
     async def _commit(self) -> None:
         if self._nested_ctx is not None:
-            await self.db_sess.flush()
+            await self.db_sess.commit()
             await self._nested_ctx.__aexit__(None, None, None)
             self._nested_ctx = None
             print("[SqlAlchemy UoW] db session committed")

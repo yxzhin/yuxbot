@@ -15,11 +15,7 @@ from src.backend.services.clans.infra.repositories.sqlal import (
     SqlAlchemyClanMemberRepository,
     SqlAlchemyClanRepository,
 )
-from src.backend.services.clans.infra.units_of_work.sqlal import (
-    SqlAlchemyClanUnitOfWork,
-)
 from src.backend.services.players.infra.models import *
-from src.backend.shared.infra.events import InMemoryEventBus
 from src.backend.shared.utils import Base
 
 
@@ -76,20 +72,10 @@ async def db_sess(test_engine: AsyncEngine) -> AsyncGenerator[AsyncSession, Any]
 
 
 @pytest.fixture
-def event_bus():
-    return InMemoryEventBus()
-
-
-@pytest.fixture
-async def clan_member_repo_factory(db_sess):
-    return lambda: SqlAlchemyClanMemberRepository(db_sess)
-
-
-@pytest.fixture
 async def clan_repo_factory(db_sess):
     return lambda: SqlAlchemyClanRepository(db_sess)
 
 
 @pytest.fixture
-async def clan_uow_factory(db_sess):
-    return lambda: SqlAlchemyClanUnitOfWork(db_sess)
+async def clan_member_repo_factory(db_sess):
+    return lambda: SqlAlchemyClanMemberRepository(db_sess)

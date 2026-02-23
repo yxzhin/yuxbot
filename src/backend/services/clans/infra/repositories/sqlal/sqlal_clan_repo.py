@@ -1,4 +1,3 @@
-from string import whitespace
 from uuid import UUID
 
 from sqlalchemy import select, update
@@ -24,8 +23,6 @@ class SqlAlchemyClanRepository(ClanRepository):
         return clan
 
     async def get_by_name(self, clan_name: str) -> Clan | None:
-        trans = str.maketrans("", "", whitespace)
-        clan_name = clan_name.translate(trans)
         query = await self.db_sess.execute(
             select(ClanModel).where(ClanModel.clan_name == clan_name)
         )
@@ -34,8 +31,7 @@ class SqlAlchemyClanRepository(ClanRepository):
         return clan
 
     async def get_by_tag(self, clan_tag: str) -> Clan | None:
-        trans = str.maketrans("", "", whitespace)
-        clan_tag = clan_tag.upper().translate(trans)
+        clan_tag = clan_tag.upper()
         query = await self.db_sess.execute(
             select(ClanModel).where(ClanModel.clan_tag == clan_tag)
         )

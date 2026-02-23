@@ -1,4 +1,3 @@
-from string import whitespace
 from uuid import UUID
 
 from src.backend.services.clans.domain.entities import Clan
@@ -18,16 +17,13 @@ class InMemoryClanRepository(ClanRepository):
         return None
 
     async def get_by_name(self, clan_name: str) -> Clan | None:
-        trans = str.maketrans("", "", whitespace)
-        clan_name = clan_name.translate(trans)
         for clan in self.inm_storage.clans:
             if clan.clan_name.value == clan_name:
                 return clan
         return None
 
     async def get_by_tag(self, clan_tag: str) -> Clan | None:
-        trans = str.maketrans("", "", whitespace)
-        clan_tag = clan_tag.upper().translate(trans)
+        clan_tag = clan_tag.upper()
         for clan in self.inm_storage.clans:
             if clan.clan_tag.value == clan_tag:
                 return clan

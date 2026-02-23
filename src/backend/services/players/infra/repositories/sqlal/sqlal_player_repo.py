@@ -44,7 +44,7 @@ class SqlAlchemyPlayerRepository(PlayerRepository):
             .where(PlayerModel.player_id == player.player_id)
             .values(
                 username=player.username,
-                balance=player.balance,
+                balance=player.balance.amount,
             )
             .execution_options(synchronize_session="fetch")
         )

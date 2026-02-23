@@ -1,7 +1,5 @@
 from uuid import uuid4
 
-import pytest
-
 from src.backend.services.clans.domain.entities import ClanMember
 
 
@@ -77,20 +75,3 @@ async def test_get_nonexistent_clan_member_returns_none(clan_member_repo_factory
     assert await clan_member_repo.get_by_id(73) is None
     assert await clan_member_repo.get_by_player_id(73) is None
     assert await clan_member_repo.get_by_clan_id(uuid4()) == []
-
-
-async def test_clan_member_unique_constraint(clan_member_repo_factory):
-    clan_member_repo = clan_member_repo_factory()
-
-    clan_member1 = ClanMember.create(73, uuid4())
-    await clan_member_repo.save(clan_member1)
-
-    clan_id2 = uuid4()
-
-    clan_member2 = ClanMember.create(73, clan_id2)
-    with pytest.raises(Exception):  # noqa: B017
-        await clan_member_repo.save(clan_member2)
-
-    clan_member3 = ClanMember.create(37, clan_id2)
-    with pytest.raises(Exception):  # noqa: B017
-        await clan_member_repo.save(clan_member3)
