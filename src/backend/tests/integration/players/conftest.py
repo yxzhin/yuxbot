@@ -8,15 +8,15 @@ from src.backend.services.players.infra.repositories.sqlal import (
 
 
 @pytest.fixture
-async def player_repo_factory(db_sess):
-    return lambda: SqlAlchemyPlayerRepository(db_sess)
+async def player_repo(db_sess):
+    return SqlAlchemyPlayerRepository(db_sess)
 
 
 @pytest.fixture
-async def item_repo_factory(db_sess):
-    return lambda: SqlAlchemyItemRepository(db_sess)
+async def item_repo(db_sess):
+    return SqlAlchemyItemRepository(db_sess)
 
 
 @pytest.fixture
-async def inventory_item_repo_factory(db_sess):
-    return lambda: SqlAlchemyInventoryItemRepository(db_sess)
+async def inventory_item_repo(db_sess):
+    return SqlAlchemyInventoryItemRepository(db_sess)

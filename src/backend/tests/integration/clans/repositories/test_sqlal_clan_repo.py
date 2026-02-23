@@ -2,9 +2,7 @@ from src.backend.services.clans.domain.entities import Clan
 from src.backend.services.clans.domain.value_objects import ClanName, ClanTag
 
 
-async def test_save_inserts_new_clan(clan_repo_factory):
-    clan_repo = clan_repo_factory()
-
+async def test_save_inserts_new_clan(clan_repo):
     clan = Clan.create("ril73", "73", 73)
 
     await clan_repo.save(clan)
@@ -18,9 +16,7 @@ async def test_save_inserts_new_clan(clan_repo_factory):
     assert get_clan.created_at == clan.created_at
 
 
-async def test_save_updates_existing_clan(clan_repo_factory):
-    clan_repo = clan_repo_factory()
-
+async def test_save_updates_existing_clan(clan_repo):
     clan = Clan.create("ril73", "73", 73)
 
     await clan_repo.save(clan)
@@ -42,9 +38,7 @@ async def test_save_updates_existing_clan(clan_repo_factory):
     assert get_clan.clan_tag.value == clan_tag
 
 
-async def test_get_clan_by_name(clan_repo_factory):
-    clan_repo = clan_repo_factory()
-
+async def test_get_clan_by_name(clan_repo):
     clan = Clan.create("ril73", "73", 73)
 
     await clan_repo.save(clan)
@@ -55,9 +49,7 @@ async def test_get_clan_by_name(clan_repo_factory):
     assert get_clan.clan_id == clan.clan_id
 
 
-async def test_get_clan_by_tag_upper(clan_repo_factory):
-    clan_repo = clan_repo_factory()
-
+async def test_get_clan_by_tag_upper(clan_repo):
     clan = Clan.create("ril73", "RIL73", 73)
 
     await clan_repo.save(clan)
@@ -68,9 +60,7 @@ async def test_get_clan_by_tag_upper(clan_repo_factory):
     assert get_clan.clan_id == clan.clan_id
 
 
-async def test_get_clan_by_owner_id(clan_repo_factory):
-    clan_repo = clan_repo_factory()
-
+async def test_get_clan_by_owner_id(clan_repo):
     clan = Clan.create("ril73", "ril73", 73)
 
     await clan_repo.save(clan)
@@ -81,9 +71,7 @@ async def test_get_clan_by_owner_id(clan_repo_factory):
     assert get_clan.clan_id == clan.clan_id
 
 
-async def test_get_nonexistent_clan_returns_none(clan_repo_factory):
-    clan_repo = clan_repo_factory()
-
+async def test_get_nonexistent_clan_returns_none(clan_repo):
     assert await clan_repo.get_by_id(73) is None
     assert await clan_repo.get_by_name("ril73") is None
     assert await clan_repo.get_by_tag("73") is None
