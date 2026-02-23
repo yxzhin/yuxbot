@@ -18,3 +18,4 @@ htmlcov
 *.pyi
 node_modules
 test.db
+clear_cache.py

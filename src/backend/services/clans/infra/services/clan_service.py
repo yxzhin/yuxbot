@@ -27,6 +27,10 @@ class ClanService(BaseClanService):
         if existing is not None:
             raise ClanAlreadyExistsError("clan tag already taken")
 
+        existing = await self.clan_repo.get_by_owner_id(owner_id)
+        if existing is not None:
+            raise ClanAlreadyExistsError("this player is already an owner of a clan")
+
         existing = await self.clan_member_repo.get_by_player_id(owner_id)  # type: ignore
         if existing is not None:
             raise PlayerAlreadyInClanError("this player is already a member of a clan")
