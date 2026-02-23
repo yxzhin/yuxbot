@@ -2,6 +2,7 @@ from uuid import UUID
 
 from ...domain.entities import InventoryItem, Item, Player
 from ...domain.exceptions import ItemAlreadyExistsError, ItemNotFoundError
+from ...domain.value_objects import ItemAmount
 from ...ports import BaseInventoryService, InventoryItemRepository, ItemRepository
 
 
@@ -42,10 +43,11 @@ class InventoryService(BaseInventoryService):
         for inventory_item in inventory_items:
             if inventory_item.item_id == item.item_id:
                 new_amount = inventory_item.item_amount.amount + item_amount
-                if new_amount < 0:
+                if new_amount < 1:
                     await self.inventory_item_repo.delete(inventory_item)
                     return None
 
+                inventory_item.item_amount = ItemAmount(new_amount)
                 await self.inventory_item_repo.save(inventory_item)
                 return inventory_item
 
@@ -54,6 +56,7 @@ class InventoryService(BaseInventoryService):
             item_id=item.item_id,
             item_amount=item_amount,
         )
+        await self.inventory_item_repo.save(inventory_item)
         return inventory_item
 
     async def get_inventory_items(self, player: Player) -> list[InventoryItem]:
