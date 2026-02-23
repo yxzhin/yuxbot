@@ -18,9 +18,9 @@ async def get_player(
     player_id: int,
     use_case: FromDishka[GetPlayerUseCase],
 ):
-    player_dto = await use_case.execute(player_id)
-    player = player_dto.player
-    inventory = player_dto.inventory
+    player_with_inventory_dto = await use_case.execute(player_id)
+    player = PlayerMapper.to_dto(player_with_inventory_dto.player)
+    inventory = player_with_inventory_dto.inventory
     return {
         "message": "successfully retrieved player data",
         "success": True,

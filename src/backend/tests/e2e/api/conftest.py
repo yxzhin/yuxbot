@@ -91,7 +91,7 @@ async def app_container(
 
 
 @pytest.fixture
-def app(app_container: AsyncContainer) -> FastAPI:
+async def app(app_container: AsyncContainer) -> FastAPI:
     """Создает FastAPI приложение для тестирования."""
     app = FastAPI()
     app.include_router(clans_router)
@@ -113,7 +113,7 @@ async def httpx_client(app: FastAPI) -> AsyncGenerator[AsyncClient, Any]:
 
 
 @pytest.fixture
-def create_player(httpx_client: AsyncClient) -> Callable[[int, str], Any]:
+async def create_player(httpx_client: AsyncClient) -> Callable[[int, str], Any]:
     """
     Фикстура для создания пользователя через API.
     Возвращает функцию, которая создает пользователя с заданными параметрами.
@@ -140,7 +140,23 @@ def create_player(httpx_client: AsyncClient) -> Callable[[int, str], Any]:
 
 
 @pytest.fixture
-def create_clan(httpx_client: AsyncClient) -> Callable[[str, str, int], Any]:
+async def get_player(httpx_client: AsyncClient) -> Callable[[int], Any]:
+    async def _get_player(
+        player_id: int,
+    ) -> tuple[dict, dict]:
+        response = await httpx_client.get(f"/players/{player_id}")
+        assert response.status_code == 200, response.text
+
+        json = response.json()
+        assert json["success"] is True
+
+        return json["player"], json["inventory"]
+
+    return _get_player
+
+
+@pytest.fixture
+async def create_clan(httpx_client: AsyncClient) -> Callable[[str, str, int], Any]:
     """
     Фикстура для создания клана через API.
     Возвращает функцию, которая создает клан с заданными параметрами.
