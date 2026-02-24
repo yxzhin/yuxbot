@@ -5,6 +5,7 @@ an intimidating asynchronous MMORPG game in Discord - build your Empire!
 @TODO
 
 [![CI](https://github.com/yxzhin/yuxbot/actions/workflows/ci.yml/badge.svg)](https://github.com/yxzhin/yuxbot/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/github/yxzhin/yuxbot/graph/badge.svg?token=G846IJSD7X)](https://codecov.io/github/yxzhin/yuxbot)
 
 ## credits
 

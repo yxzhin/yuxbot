@@ -82,7 +82,7 @@ exclude = [
 ]
 
 [tool.pytest.ini_options]
-addopts = "-v" #  --cov=src/backend --cov-report=html
+addopts = "-v --cov=src/backend --cov-report=html --cov-report=xml"
 testpaths = [
     "src/backend/tests",
 ]
